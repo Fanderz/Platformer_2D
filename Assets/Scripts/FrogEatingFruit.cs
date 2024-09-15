@@ -4,6 +4,7 @@ using UnityEngine;
 public class FrogEatingFruit : MonoBehaviour
 {
     public event Action OnIncreaseScore;
+    //public event Action<Fruit> EatedFruit;
 
     private void EatFruit() =>
         OnIncreaseScore?.Invoke();

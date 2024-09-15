@@ -6,13 +6,13 @@ public class MoveCamera : MonoBehaviour
 
     private Vector3 _offset;
 
-    private void Update()
+    private void FixedUpdate()
     {
         _offset = transform.position - _frog.transform.position;
     }
 
     private void LateUpdate()
     {
-        transform.position = _frog.transform.position + _offset;
+        Camera.main.transform.position = new Vector3(_frog.transform.position.x + _offset.x, transform.position.y, transform.position.z);
     }
 }
