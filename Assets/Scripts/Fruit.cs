@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class Fruit : MonoBehaviour
 {
-    //public event Action<Fruit> Eated;
+    public event Action<Fruit> Eated;
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.TryGetComponent(out Frog frog))
-    //        Eated?.Invoke(this); 
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.TryGetComponent(out Frog frog))
+            Eated?.Invoke(this);
+    }
 
     public void Activate() =>
         SetActivity(true);

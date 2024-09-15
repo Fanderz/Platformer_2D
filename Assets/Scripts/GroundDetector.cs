@@ -7,9 +7,7 @@ public class GroundDetector : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider is CompositeCollider2D)
-        {
             IsGround = true;
-        }
     }
 
     private void OnCollisionExit2D()

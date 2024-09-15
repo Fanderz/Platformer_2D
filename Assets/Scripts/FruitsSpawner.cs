@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using System.Collections;
+using System.Collections.Generic;
 
 public class FruitsSpawner : MonoBehaviour
 {
     [SerializeField] private Fruit[] _prefab;
     [SerializeField] private List<Transform> _spawnPoints;
-    //[SerializeField] private float _repeatRate;
     [SerializeField] private int _poolCapacity;
     [SerializeField] private int _poolMaxSize;
 
     private ObjectPool<Fruit> _pool;
     private Coroutine _coroutine;
-    //private WaitForSeconds _wait;
 
     private bool _isRunning = false;
     private int _spawnPointIndex = 0;
@@ -28,8 +26,6 @@ public class FruitsSpawner : MonoBehaviour
             collectionCheck: true,
             defaultCapacity: _poolCapacity,
             maxSize: _poolMaxSize);
-
-        //_wait = new WaitForSeconds(_repeatRate);
     }
 
     private void OnEnable()
@@ -50,12 +46,12 @@ public class FruitsSpawner : MonoBehaviour
     {
         _pool.Release(fruit);
 
-        //fruit.Eated -= OnReleaseFruit;
+        fruit.Eated -= OnReleaseFruit;
     }
 
     private void SpawnObject(Fruit fruit)
     {
-        if (_spawnPointIndex < _poolMaxSize)
+        if (_spawnPointIndex < _spawnPoints.Count)
         {
             Vector3 startPosition = _spawnPoints[_spawnPointIndex++].position;
             fruit.transform.position = startPosition;
@@ -69,8 +65,8 @@ public class FruitsSpawner : MonoBehaviour
         {
             if (_pool.CountAll < _poolMaxSize || _pool.CountInactive > 0)
             {
-                _pool.Get();
-                //fruit.Eated += OnReleaseFruit;
+                var fruit = _pool.Get();
+                fruit.Eated += OnReleaseFruit;
             }
 
             yield return null;
